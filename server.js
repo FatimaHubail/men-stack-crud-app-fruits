@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const Fruit = require('./models/fruit.js');
 const morgan = require('morgan');
+const path = require('path');
 const override = require('method-override');
 
 dotenv.config();
@@ -13,6 +14,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(override("_method"))
 app.use(morgan('dev'));
+app.use(express.static(path.join(__dirname, "public")));
 
 // DB connection
 const connect = async () => {

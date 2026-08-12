@@ -4,21 +4,35 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
     <title><%= fruit.name %></title>
 </head>
 
 <body>
-    <a href="/fruits/">Back to Fruits</a>
-    <h1><%= fruit.name %></h1>
-   <% if (fruit.isReadyToEat){ %>
-        <p>Yummy Yummy get it in my tummy!</p>
-   <% }else{ %>
-        <p>Yuck!! Needs more time</p>
-    <% } %>
+    <div>
+       <a href="/fruits/">Back to Fruits</a>
+        <h1><%= fruit.name %></h1>
+        <% if (fruit.isReadyToEat){ %>
+            <p>Yummy Yummy get it in my tummy!</p>
+        <% }else{ %>
+            <p>Yuck!! Needs more time</p>
+        <% } %>
 
-    <form action="/fruits/<%= fruit._id %>?_method=DELETE" method="post">
-        <button type="submit">Delete</button>
-    </form>
-</body>
+        <div class="fruit-actions">
+            <form class="delete-form" action="/fruits/<%=fruit._id%>?_method=DELETE" method="POST">
+                <button class="delete-button" type="submit">
+                    Delete <%= fruit.name %>
+                </button>
+            </form>
+            <a class="edit-link" href="/fruits/<%= fruit._id %>/edit">
+                <div class="edit-text">Edit <%= fruit.name %>
+                </div>
+            </a>
+        </div>
+    </div>
+    <a class="fruits-index-link" href="/fruits">
+        <div class="index-link-text" href="/fruits/">Back to Fruits</div>
+    </a>
+</body>    
 
 </html>

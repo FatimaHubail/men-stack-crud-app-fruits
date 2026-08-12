@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
     <title>Edit Fruit</title>
 </head>
 
@@ -14,11 +15,14 @@
         <label for="name">Name:</label>
         <input type="text" name="name" id="name" value="<%= fruit.name %>">
 
-        <label for="isReadyToEat">Ready to Eat?</label>
-        <input type="checkbox" name="isReadyToEat" id="isReadyToEat"
-        <% if (fruit.isReadyToEat){ %>
-            checked
-        <% } %> >
+        <div class="checkbox-div">
+            <label for="isReadyToEat">Ready to Eat?</label>
+            <input type="checkbox" name="isReadyToEat" id="isReadyToEat"
+            <% if (fruit.isReadyToEat){ %>
+                checked
+            <% } %>
+            >
+        </div>
 
         <button type="submit">Update Fruit</button>
     </form>
