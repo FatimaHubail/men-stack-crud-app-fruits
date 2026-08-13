@@ -6,6 +6,8 @@ const Fruit = require('./models/fruit.js');
 const morgan = require('morgan');
 const path = require('path');
 const override = require('method-override');
+const fruitsCtrl = require('./controllers/fruitsCtrl');
+
 
 dotenv.config();
 const app = express();
@@ -48,60 +50,15 @@ app.post('/fruits', async (req, res) => {
     }
 });
 
-// rendering all fruits
-app.get('/fruits', async (req, res) => {
-    try {
-        const allFruits = await Fruit.find();
-        res.render("fruits/index.ejs", { fruits: allFruits });
-    } catch (error) {
-        res.send('failed to get all fruits');
-    }
-});
+app.get('/', fruitsCtrl.home);
+app.get('/fruits/new', fruitsCtrl.showNewForm);
+app.post('/fruits', fruitsCtrl.create);
+app.get('/fruits', fruitsCtrl.index);
+app.get('/fruits/:fruitId', fruitsCtrl.show);
+app.delete('/fruits/:fruitId', fruitsCtrl.delete);
+app.get('/fruits/:fruitId/edit', fruitsCtrl.edit);
+app.put('/fruits/:fruitId', fruitsCtrl.update);
 
-// show single fruit info
-app.get('/fruits/:id', async (req, res) => {
-    try {
-        const fruit = await Fruit.findById(req.params.id);
-        res.render("fruits/show.ejs", { fruit });
-    } catch (error) {
-        console.log('failed to fetch the fruit');
-    }
-})
-
-// delete fruit
-app.delete('/fruits/:id', async (req, res) => {
-    try {
-        await Fruit.findByIdAndDelete(req.params.id);
-        res.redirect("/fruits");
-    } catch (error) {
-        res.send('unable to delete fruit');
-    }
-})
-
-// edit fruit
-app.get('/fruits/:id/edit', async (req, res) => {
-    try {
-        const fruit = await Fruit.findById(req.params.id);
-        res.render('fruits/edit.ejs', { fruit });
-    } catch (error) {
-        res.send('unable to update the fruit');
-    }
-})
-
-app.put('/fruits/:id', async (req, res) => {
-    try {
-        if (req.body.isReadyToEat === "on") {
-            req.body.isReadyToEat = true;
-        } else {
-            req.body.isReadyToEat = false;
-        }
-        await Fruit.findByIdAndUpdate(req.params.id, req.body);
-        res.redirect(`/fruits/${req.params.id}`); 
-    } catch (error) {
-        console.log(error);
-        res.send('Coun')
-    }
-})
 app.listen(3000, () => {
     console.log('Listening on port 3000');
 });
